@@ -1,0 +1,54 @@
+name: Cypress E2E Testing of Deployed React Adobe Embed Component as a Heartbeat Canary
+
+on:
+  push:
+    branches: [ main ]
+  schedule:  
+    - cron: # Run every thirty minutes
+        - '*/30 * * * *'
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node18.6.0-chrome105-ff104
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v6.5.0 #use the explicit version number
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: npm install
+          config-file: "cypress.config.ts"
+
+  cypress-runner:
+    name: Cypress Runner for completing a run of all tests
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node18.6.0-chrome105-ff104
+    needs: install
+    environment: cypress
+    steps:
+      - name: Checkout test code
+        uses: actions/checkout@v2
+
+      - name : Install dependencies required for Cypress"
+        uses: cypress-io/github-action@v6.5.0 #use the explicit version number
+        with:
+          config-file: "cypress.config.ts"
+          runTests: false
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6.5.0 #use the explicit version number
+        with:
+          install: false # Explicit due to having done so in a different step
+          browser: chrome
+          record: true
+          spec: cypress/e2e/*
+          config-file: "cypress.config.ts"
+          run-tests: "true"
+
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          REACT_ADOBE_EMBED_API_KEY: ${{ secrets.REACT_ADOBE_EMBED_API_KEY }}
