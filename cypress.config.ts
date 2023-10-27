@@ -37,9 +37,6 @@ const config = defineConfig({
             BASE_URL: 'https://ziping-liu-corporation.github.io/react-adobe-embed',
             DEFAULT_PATH: "#/test",
         },
-
-        
-      
         "animationDistanceThreshold": 5,
         "chromeWebSecurity": false,
         "waitForAnimations": true,
