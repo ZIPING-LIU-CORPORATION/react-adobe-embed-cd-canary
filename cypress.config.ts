@@ -38,6 +38,7 @@ const config = defineConfig({
         env: {
             BASE_URL: 'https://ziping-liu-corporation.github.io/react-adobe-embed',
             DEFAULT_PATH: "#/test",
+            CYPRESS_BASE_URL: 'https://ziping-liu-corporation.github.io/react-adobe-embed',
         },
     
         "waitForAnimations": true,
