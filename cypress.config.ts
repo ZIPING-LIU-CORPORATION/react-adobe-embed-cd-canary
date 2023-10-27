@@ -17,7 +17,7 @@ const nodeEvents = (on: Cypress.PluginEvents, config: Cypress.ConfigOptions<any>
     // implement node event listeners here
 
 
-    config.projectId = 't7aqz7';
+    config.projectId = process.env.CYPRESS_PROJECT_ID;
     config.retries = 3;
     on('task', tasks);
 }
@@ -31,12 +31,14 @@ const config = defineConfig({
     videoCompression: false,
     setupNodeEvents: nodeEvents,
 
-
+    
     e2e: {
         env: {
             BASE_URL: 'https://ziping-liu-corporation.github.io/react-adobe-embed',
             DEFAULT_PATH: "#/test",
         },
+
+        
       
         "animationDistanceThreshold": 5,
         "chromeWebSecurity": false,
@@ -48,6 +50,7 @@ const config = defineConfig({
         screenshotsFolder: path.resolve(__dirname, 'cypress/screenshots'),
         screenshotOnRunFailure: true,
         supportFile: path.resolve(__dirname, 'cypress/support/index.ts'),
+        
     },
 });
 
