@@ -1,4 +1,16 @@
 {
+  "name": "react-adobe-embed-canary",
+  "version": "1.0",
+  "description": "React Adobe Embed Canary",
+
+  "repository": {
+    "url": "https://github.com/ZIPING-LIU-CORPORATION/react-adobe-embed-cd-canary.git",
+    "type": "git"
+  },
+  "author": "Ziping Liu",
+
+  "homepage": "https://ziping-liu-corporation.github.io/react-adobe-embed/",
+  
   "devDependencies": {
     "@testing-library/cypress": "^10.0.1",
     "@types/cypress": "^1.1.3",
