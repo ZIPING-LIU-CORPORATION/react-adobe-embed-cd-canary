@@ -1,5 +1,7 @@
 cypress/videos
 node_modules
+clean
+clear
 cypress/downloads
 cypress/screenshots
 .env
