@@ -23,11 +23,12 @@ jobs:
           config-file: "cypress.config.ts"
 
   cypress-runner:
+    
     name: Cypress Runner for completing a run of all tests
     runs-on: ubuntu-latest
     container: cypress/browsers:node18.6.0-chrome105-ff104
     needs: install
-    environment: cypress
+    environment: canary-continous-deployment
     steps:
       - name: Checkout test code
         uses: actions/checkout@v2
