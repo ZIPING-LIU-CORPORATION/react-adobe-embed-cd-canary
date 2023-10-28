@@ -1,6 +1,8 @@
 name: Cypress E2E Testing of Deployed React Adobe Embed Component as a Heartbeat Canary
 
 on:
+  repository_dispatch:
+    types: [react_adobe_embed_code_pushed]
   push:
     branches: [main]
   schedule:  
