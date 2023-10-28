@@ -77,7 +77,7 @@ jobs:
         with:
           install: false # Explicit due to having done so in a different step
           record: true
-          spec: cypress/e2e/base.spec.ts
+          spec: cypress/e2e/base.*.ts
           config-file: "cypress.config.ts"
           browser: chrome
           
