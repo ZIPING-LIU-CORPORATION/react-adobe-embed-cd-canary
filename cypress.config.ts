@@ -38,6 +38,7 @@ const config = defineConfig({
         env: {
             BASE_URL: 'https://ziping-liu-corporation.github.io/react-adobe-embed',
             DEFAULT_PATH: "#/test",
+            DATEMODIFIED_CODE_DEPLOYED:  process.env.DATEMODIFIED_CODE_DEPLOYED,
             CYPRESS_BASE_URL: 'https://ziping-liu-corporation.github.io/react-adobe-embed',
         },
     
