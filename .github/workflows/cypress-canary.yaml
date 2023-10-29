@@ -44,14 +44,14 @@ jobs:
         with:
           install: false # Explicit due to having done so in a different step
           record: true
-          spec: cypress/e2e/verify.spec.ts
+          spec: cypress/e2e/push.*.ts
           config-file: "cypress.config.ts"
           browser: chrome
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           REACT_ADOBE_EMBED_API_KEY: ${{ secrets.REACT_ADOBE_EMBED_API_KEY }}
-          DATEMODIFIED_CODE_DEPLOYED: ${{ github.event.client_payload.message.DATEMODIFIED_CODE_DEPLOYED }}
+          DATEMODIFIED_CODE_DEPLOYED: ${{ github.event.client_payload.DATEMODIFIED_CODE_DEPLOYED }}
  
   cypress-runner:
     name: Cypress Runner for completing a run of all tests
