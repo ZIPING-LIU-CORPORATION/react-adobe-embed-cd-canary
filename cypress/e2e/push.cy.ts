@@ -18,7 +18,7 @@ describe("Check that the canary accessed deployed page is the deployment from th
 
         cy.visit(Cypress.env("BASE_URL") + Cypress.env("DEFAULT_PATH"));
     
-        cy.findByTestId('test-route').contains('Test').scrollIntoView({
+        cy.findByTestId('test-link').contains('Test').scrollIntoView({
           duration: 250
         });
     });
@@ -27,7 +27,7 @@ describe("Check that the canary accessed deployed page is the deployment from th
 
     it("should visit the deployed canary static page with verification that the page has the latest code deployment", () => {
         cy.visit(Cypress.env("BASE_URL") + Cypress.env("DEFAULT_PATH"));
-        cy.findByTestId('test-route').contains('Test').scrollIntoView({
+        cy.findByTestId('test-link').contains('Test').scrollIntoView({
           duration: 500
         });
         cy.get('meta[property="article:modified_time"]'
