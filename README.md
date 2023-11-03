@@ -12,6 +12,3 @@
 For more information regarding the testing endpoint, or any other info regarding the use of this canary end to end testing as scheduled and triggered workflows, please visit the [react-adobe-embed repository]([https://](https://github.com/ZIPING-LIU-CORPORATION/react-adobe-embed)https://github.com/ZIPING-LIU-CORPORATION/react-adobe-embed) and be sure to also check out its workflows that not only trigger workflows in this repository, but also deploys a testing endpoint through github static pages. `Notice: The implementation of continuous deployment and integrated testing development pipeline is a distinctive feature offered by Github's enterprise-level services. It is important to clarify that the continuous deployment workflows and implementations of continuous deployment are not in any way associated with or referenced to Github's own enterprise-level services. Github's enterprise-level services do not have any rights or permissions to utilize the code within or related repositories as a reference, inspiration, or for use in its "continuous deployment" services.`
  
 
-
-
-
