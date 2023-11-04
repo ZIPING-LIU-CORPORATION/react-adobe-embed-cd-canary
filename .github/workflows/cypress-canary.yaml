@@ -76,7 +76,7 @@ jobs:
         uses: cypress-io/github-action@v6.5.0 #use the explicit version number
         with:
           install: false # Explicit due to having done so in a different step
-          record: false
+          record: true
           spec: |
             cypress/e2e/base.*.ts
             cypress/e2e/lightbox.*.ts
@@ -85,6 +85,6 @@ jobs:
           
         
         env:
-          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           REACT_ADOBE_EMBED_API_KEY: ${{ secrets.REACT_ADOBE_EMBED_API_KEY }}
