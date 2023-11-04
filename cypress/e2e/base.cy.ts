@@ -25,6 +25,8 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
 
     cy.findByTestId('test-link').contains('Test').scrollIntoView().click();
 
+    cy.contains('Basic').click();
+
     cy.location(
       "pathname"
     ).hash().should("eq", "#/home");
@@ -52,8 +54,9 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
       header: (new Date()).toLocaleTimeString(),
     });
     cy.findByTestId('test-link').contains('Test').scrollIntoView({
-      duration: 5000,
+      duration: 1000,
     }).click();
+    cy.contains('Basic').click();
     cy.location(
       "pathname"
     ).hash().should("eq", "#/home");
@@ -64,7 +67,7 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
     });
 
     cy.findByTestId('home-link').contains('Home').scrollIntoView({
-      duration: 3000,
+      duration: 1000,
     }).click();
     cy.log("Checking for correct route change after clicking Test");
     cy.task('logToConsole', {
@@ -77,6 +80,7 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
     cy.findByTestId('test-link').contains('Test').scrollIntoView({
       duration: 1000,
     }).click();
+    cy.contains('Basic').click();
 
     cy.location(
       "pathname"
