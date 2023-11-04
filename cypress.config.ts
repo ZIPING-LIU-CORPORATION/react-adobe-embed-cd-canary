@@ -48,7 +48,7 @@ const config = defineConfig({
         projectId:  process.env.CYPRESS_PROJECT_ID,
         setupNodeEvents: nodeEvents,
         
-        supportFile: path.resolve(__dirname, 'cypress/support/index.ts'),
+        supportFile: path.resolve(__dirname, 'cypress/support/commands.ts'),
         
     },
 });

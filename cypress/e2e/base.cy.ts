@@ -16,6 +16,7 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
     });
 
 
+
   });
 
   it("Should visit the deployed canary, then navigate via the header to the home page", () => {
@@ -26,14 +27,27 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
     cy.findByTestId('test-link').contains('Test').scrollIntoView().click();
 
     cy.contains('Basic').click();
+ 
 
     cy.location(
       "pathname"
     ).hash().should("eq", "#/home");
+ 
 
+    cy.addEventListenerAdobeReady().then((ready:any) => {
+      const adobeDC = ready.AdobeDC;
+      cy.spy(adobeDC, 'View').as('adobeDCSpy');
+    });
     cy.findByTestId("react-adobe-embed-handholding-adobe-api-loading-idiocy-initial").should('exist').scrollIntoView({
-      duration: 2000,
+      duration:800,
     })
+   
+ 
+  
+
+    cy.get('@adobeDCSpy').should('be.calledOnce');
+
+  
 
   });
 
@@ -60,6 +74,12 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
     cy.location(
       "pathname"
     ).hash().should("eq", "#/home");
+    cy.addEventListenerAdobeReady().then((ready:any) => {
+      const adobeDC = ready.AdobeDC;
+      cy.spy(adobeDC, 'View').as('adobeDCSpy');
+    });
+
+
     cy.log("Navigating back to the default path, which is just a static page without any react-adobe-embed components");
     cy.task('logToConsole', {
       message:  'Navigating back to the default path, which is just a static page without any react-adobe-embed components',
@@ -86,6 +106,7 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
       "pathname"
     ).hash().should("eq", "#/home");
 
+    cy.intercept('POST', 'https://viewlicense.adobe.io/viewsdklicense/jwt').as('getLicense');
 
 
     cy.log("Check that the react component has re-rendered through the setting of a data-testid  attribute showcasing the react component noticing it render, following an already known initial render");
@@ -97,6 +118,11 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
       duration: 1000,
     })
 
+    cy.wait('@getLicense', {
+      timeout: 10000,
+    }).then((_interception: any) => {
+    cy.get('@adobeDCSpy').should('be.calledTwice');
+    });
   }
   );
 });

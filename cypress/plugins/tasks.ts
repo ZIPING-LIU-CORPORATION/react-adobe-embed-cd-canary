@@ -13,6 +13,17 @@ const colorMapFromName = {
 
 const tasks: Cypress.Tasks = {
     
+    getWindowGlobal(name: string) {
+
+        const windowlocal = document.defaultView || window;
+
+        const variableGLobal = (windowlocal as any)[name];
+
+        return variableGLobal;
+
+    },
+    
+  
 
     logToConsole({
         header = '',
