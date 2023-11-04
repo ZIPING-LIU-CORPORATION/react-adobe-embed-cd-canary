@@ -34,7 +34,9 @@ Cypress.Commands.add('addEventListenerAdobeReady', () => {
 
             }
             )
-        })).as('adobeDCReady');
+        }) , {
+            timeout: 10000,
+        } ).as('adobeDCReady');
         })
  
 
