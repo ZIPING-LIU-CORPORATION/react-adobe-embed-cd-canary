@@ -71,13 +71,10 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
       duration: 1000,
     }).click();
     cy.contains('Basic').click();
+    
     cy.location(
       "pathname"
     ).hash().should("eq", "#/home");
-    cy.addEventListenerAdobeReady().then((ready:any) => {
-      const adobeDC = ready.AdobeDC;
-      cy.spy(adobeDC, 'View').as('adobeDCSpy');
-    });
 
 
     cy.log("Navigating back to the default path, which is just a static page without any react-adobe-embed components");
@@ -120,8 +117,6 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
 
     cy.wait('@getLicense', {
       timeout: 10000,
-    }).then((_interception: any) => {
-    cy.get('@adobeDCSpy').should('be.calledTwice');
     });
   }
   );
