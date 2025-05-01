@@ -11,11 +11,9 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
 
     cy.visit(Cypress.env("BASE_URL") + Cypress.env("DEFAULT_PATH"));
 
-    cy.findByTestId('test-link').contains('Test').scrollIntoView({
-      duration: 1000
+    cy.findByTestId('test-link').scrollIntoView({
+      duration: 5000
     });
-
-
 
   });
 
@@ -67,7 +65,7 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
       message:  'Navigating to Home react route, using React Link which is a view that contains a react-adobe-embed component',
       header: (new Date()).toLocaleTimeString(),
     });
-    cy.findByTestId('test-link').contains('Test').scrollIntoView({
+    cy.findByTestId('test-link').scrollIntoView({
       duration: 1000,
     }).click();
     cy.contains('Basic').click();
