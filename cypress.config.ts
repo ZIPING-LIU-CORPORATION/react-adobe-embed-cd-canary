@@ -20,6 +20,7 @@ const nodeEvents = (on: Cypress.PluginEvents, config: Cypress.ConfigOptions<any>
     config.projectId = process.env.CYPRESS_PROJECT_ID;
 
  
+    
     config.retries = 3;
     on('task', tasks);
 }
@@ -35,6 +36,8 @@ const config = defineConfig({
 
     
     e2e: {
+
+        taskTimeout: 30000,
         env: {
             BASE_URL: 'https://ziping-liu-corporation.github.io/react-adobe-embed',
             DEFAULT_PATH: "#/test",

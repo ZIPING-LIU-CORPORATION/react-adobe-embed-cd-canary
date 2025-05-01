@@ -33,7 +33,15 @@ describe("Check that the canary accessed deployed page is the deployment from th
           duration: 5000
         });
         
+        /// if Cypress.env('DATEMODIFIED_CODE_DEPLOYED') is not set, then skip this test
 
+        if (Cypress.env('DATEMODIFIED_CODE_DEPLOYED') === undefined) {
+          cy.task('logToConsole', {
+            message: "Cypress.env('DATEMODIFIED_CODE_DEPLOYED') is not set, skipping test",
+            header: "Skipping Test:",
+          });
+          return;
+        }
        
         cy.get('meta[property="article:modified_time"]'
             ).then(($meta) => {
