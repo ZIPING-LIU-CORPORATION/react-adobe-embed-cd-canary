@@ -51,7 +51,7 @@ jobs:
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6.5.0
         with:
-          install: false
+          install: true
           record: true
           browser: chrome
           runTests: true
