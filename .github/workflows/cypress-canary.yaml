@@ -52,7 +52,7 @@ jobs:
         uses: cypress-io/github-action@v6.5.0
         with:
           install: true
-          record: true
+          record: false
           browser: chrome
           runTests: true
         env:
