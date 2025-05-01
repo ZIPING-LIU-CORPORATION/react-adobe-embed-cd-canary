@@ -15,7 +15,7 @@ describe("Check that the canary accessed deployed page is the deployment from th
         cy.visit(Cypress.env("BASE_URL") + Cypress.env("DEFAULT_PATH"));
     
         cy.findByTestId('test-link').contains('Test').scrollIntoView({
-          duration: 250
+          duration: 5000
         });
     });
 
@@ -30,7 +30,7 @@ describe("Check that the canary accessed deployed page is the deployment from th
 
         cy.visit(Cypress.env("BASE_URL") + Cypress.env("DEFAULT_PATH"));
         cy.findByTestId('test-link').scrollIntoView({
-          duration: 500
+          duration: 5000
         });
         
 

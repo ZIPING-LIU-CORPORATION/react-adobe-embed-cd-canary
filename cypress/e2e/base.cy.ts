@@ -11,9 +11,7 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
 
     cy.visit(Cypress.env("BASE_URL") + Cypress.env("DEFAULT_PATH"));
 
-    cy.findByTestId('test-link').scrollIntoView({
-      duration: 5000
-    });
+    cy.findByTestId('test-link').scrollIntoView();
 
   });
 
@@ -66,7 +64,7 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
       header: (new Date()).toLocaleTimeString(),
     });
     cy.findByTestId('test-link').scrollIntoView({
-      duration: 1000,
+      duration: 5000,
     }).click();
     cy.contains('Basic').click();
     
@@ -82,7 +80,7 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
     });
 
     cy.findByTestId('home-link').contains('Home').scrollIntoView({
-      duration: 1000,
+      duration: 5000,
     }).click();
     cy.log("Checking for correct route change after clicking Test");
     cy.task('logToConsole', {
@@ -93,7 +91,7 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
       "pathname"
     ).hash().should("eq", "#/test");
     cy.findByTestId('test-link').contains('Test').scrollIntoView({
-      duration: 1000,
+      duration: 5000,
     }).click();
     cy.contains('Basic').click();
 
