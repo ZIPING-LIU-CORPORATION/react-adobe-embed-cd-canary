@@ -19,84 +19,59 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Authenticate to GitHub
-        run: git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Cache Node Modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            npm-${{ runner.os }}-
+
+      - name: Cache Cypress Binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-
+
+      - name: Install Dependencies
+        run: npm ci      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}-
+
+      - name: Cache Cypress Binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-
 
       - name: Install Dependencies
         run: npm ci
 
-  cypress-runner-verify:
-    name: Cypress Runner that runs a single test suite which verifies the accessed page is with the latest deployed code
-    runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:latest
-      options: --user 1001    
-    needs: install
-    environment: canary-continous-deployment
-    if: github.event_name == 'repository_dispatch'
-    steps:
-      - name: Checkout test code
-        uses: actions/checkout@v3
-
-      - name: Install dependencies required for Cypress
-        uses: cypress-io/github-action@v6.5.0
-        with:
-          config-file: "cypress.config.ts"
-          runTests: false
-
-      - name: Run Verify Test Suite
-        uses: cypress-io/github-action@v6.5.0
-        with:
-          install: false
-          record: true
-          spec: cypress/e2e/push.*.ts
-          config-file: "cypress.config.ts"
-          browser: chrome
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          REACT_ADOBE_EMBED_API_KEY: ${{ secrets.REACT_ADOBE_EMBED_API_KEY }}
-          DATEMODIFIED_CODE_DEPLOYED: ${{ github.event.client_payload.message.DATEMODIFIED_CODE_DEPLOYED }}
-
   cypress-runner:
-    name: Cypress Runner for completing a run of all tests
+    name: Run Cypress Tests
     runs-on: ubuntu-latest
     container:
       image: cypress/browsers:latest
       options: --user 1001
     needs: install
-    environment: canary-continous-deployment
     steps:
-      - name: Checkout test code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install dependencies required for Cypress
-        uses: cypress-io/github-action@v6.5.0
-        with:
-          config-file: "cypress.config.ts"
-          runTests: false
-
-      - name: Run Cypress tests
+      - name: Run Cypress Tests
         uses: cypress-io/github-action@v6.5.0
         with:
           install: false
-          record: false
-          spec: |
-            cypress/e2e/base.*.ts
-            cypress/e2e/lightbox.*.ts
-          config-file: "cypress.config.ts"
+          record: true
           browser: chrome
+          runTests: true
         env:
-          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          REACT_ADOBE_EMBED_API_KEY: ${{ secrets.REACT_ADOBE_EMBED_API_KEY }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
