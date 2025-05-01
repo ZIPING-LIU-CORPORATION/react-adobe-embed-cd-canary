@@ -19,7 +19,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-
       - name: Cache Cypress Binary
         uses: actions/cache@v3
         with:
@@ -28,17 +27,7 @@ jobs:
           restore-keys: |
             cypress-${{ runner.os }}-
 
-              - name: Cache Cypress Binary
-              uses: actions/cache@v3
-              with:
-                path: ~/.cache/Cypress
-                key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-                restore-keys: |
-                  cypress-${{ runner.os }}-
-      
-            - name: Install Dependencies
-              run: npm ci
-      
+      - name: Cache npm Dependencies
         uses: actions/cache@v3
         with:
           path: ~/.npm
@@ -46,17 +35,8 @@ jobs:
           restore-keys: |
             npm-${{ runner.os }}-
 
-      - name: Cache Cypress Binary
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            cypress-${{ runner.os }}-
-
       - name: Install Dependencies
         run: npm ci
-
   cypress-runner:
     name: Run Cypress Tests
     runs-on: ubuntu-latest
