@@ -8,21 +8,22 @@ on:
   schedule:  
    - cron: '*/12 13-23 * * *'
    - cron: '*/12 0-5 * * *'
+
 jobs:
   install:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node20.8.0-chrome114-ff118
+    container:
+      image: cypress/browsers:latest
+      options: --user 1001
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Authenticate to GitHub
         run: git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Fix NPM Cache Permissions
-        run: sudo chown -R $USER:$USER ~/.npm
-        
+
       - name: Cache Node Modules
         uses: actions/cache@v3
         with:
@@ -37,22 +38,26 @@ jobs:
   cypress-runner-verify:
     name: Cypress Runner that runs a single test suite which verifies the accessed page is with the latest deployed code
     runs-on: ubuntu-latest
-    container: cypress/browsers:node18.6.0-chrome105-ff104
+    container:
+      image: cypress/browsers:latest
+      options: --user 1001    
     needs: install
     environment: canary-continous-deployment
     if: github.event_name == 'repository_dispatch'
     steps:
       - name: Checkout test code
-        uses: actions/checkout@v2
-      - name: Install dependencies required for Cypress"
-        uses: cypress-io/github-action@v6.5.0 #use the explicit version number
+        uses: actions/checkout@v3
+
+      - name: Install dependencies required for Cypress
+        uses: cypress-io/github-action@v6.5.0
         with:
           config-file: "cypress.config.ts"
           runTests: false
+
       - name: Run Verify Test Suite
-        uses: cypress-io/github-action@v6.5.0 #use the explicit version number
+        uses: cypress-io/github-action@v6.5.0
         with:
-          install: false # Explicit due to having done so in a different step
+          install: false
           record: true
           spec: cypress/e2e/push.*.ts
           config-file: "cypress.config.ts"
@@ -62,39 +67,36 @@ jobs:
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           REACT_ADOBE_EMBED_API_KEY: ${{ secrets.REACT_ADOBE_EMBED_API_KEY }}
           DATEMODIFIED_CODE_DEPLOYED: ${{ github.event.client_payload.message.DATEMODIFIED_CODE_DEPLOYED }}
- 
+
   cypress-runner:
     name: Cypress Runner for completing a run of all tests
     runs-on: ubuntu-latest
-    container: cypress/browsers:node18.6.0-chrome105-ff104
+    container:
+      image: cypress/browsers:latest
+      options: --user 1001
     needs: install
     environment: canary-continous-deployment
     steps:
       - name: Checkout test code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name : Install dependencies required for Cypress"
-        uses: cypress-io/github-action@v6.5.0 #use the explicit version number
+      - name: Install dependencies required for Cypress
+        uses: cypress-io/github-action@v6.5.0
         with:
           config-file: "cypress.config.ts"
           runTests: false
-       
- 
-    
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v6.5.0 #use the explicit version number
+        uses: cypress-io/github-action@v6.5.0
         with:
-          install: false # Explicit due to having done so in a different step
+          install: false
           record: false
           spec: |
             cypress/e2e/base.*.ts
             cypress/e2e/lightbox.*.ts
           config-file: "cypress.config.ts"
           browser: chrome
-          
-        
         env:
-        #  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           REACT_ADOBE_EMBED_API_KEY: ${{ secrets.REACT_ADOBE_EMBED_API_KEY }}
