@@ -20,6 +20,9 @@ jobs:
         run: git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Fix NPM Cache Permissions
+        run: sudo chown -R $USER:$USER ~/.npm
+        
       - name: Cache Node Modules
         uses: actions/cache@v3
         with:
