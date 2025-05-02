@@ -20,9 +20,12 @@ const nodeEvents = (on: Cypress.PluginEvents, config: Cypress.ConfigOptions<any>
     config.projectId = process.env.CYPRESS_PROJECT_ID;
 
  
-    
+
     config.retries = 3;
     on('task', tasks);
+
+    
+
 }
 
 const config = defineConfig({
@@ -30,17 +33,22 @@ const config = defineConfig({
     
     fixturesFolder: false,
     video: true,
-
     videoCompression: false,
-    setupNodeEvents: nodeEvents,
+    setupNodeEvents: (on, config) => {
+        //@ts-ignore
+ 
+        return nodeEvents(on, config);
+    },
 
     
     e2e: {
 
+        // don't listen uncaut
+    
         taskTimeout: 30000,
         env: {
             BASE_URL: 'https://ziping-liu-corporation.github.io/react-adobe-embed',
-            DEFAULT_PATH: "#/test",
+            DEFAULT_PATH: "#/home",
             DATEMODIFIED_CODE_DEPLOYED:  process.env.DATEMODIFIED_CODE_DEPLOYED,
             CYPRESS_BASE_URL: 'https://ziping-liu-corporation.github.io/react-adobe-embed',
         },
@@ -52,9 +60,10 @@ const config = defineConfig({
         setupNodeEvents: nodeEvents,
         
         supportFile: path.resolve(__dirname, 'cypress/support/commands.ts'),
-        
+        retries: 3,
     },
 });
 
 
 export default config;
+

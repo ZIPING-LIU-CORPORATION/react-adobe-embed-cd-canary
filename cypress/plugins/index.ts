@@ -1,1 +1,3 @@
-module.exports = (on: Cypress.PluginEvents, _config: Cypress.PluginConfigOptions) => {}
+module.exports = (on: Cypress.PluginEvents, _config: Cypress.PluginConfigOptions) => {
+ 
+}

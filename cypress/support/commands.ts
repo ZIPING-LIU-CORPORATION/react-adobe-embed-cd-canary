@@ -49,3 +49,7 @@ Cypress.Commands.add('addEventListenerAdobeReady', () => {
 
 
 })
+
+
+// disable uncaught exception as its a googleads post error
+Cypress.on('uncaught:exception', () => false);

@@ -18,8 +18,6 @@ describe("Basic Configured Testing of Usage with Rendering PDF that is same in t
   it("Should visit the deployed canary, then navigate via the header to the home page", () => {
     cy.visit(Cypress.env("BASE_URL") + Cypress.env("DEFAULT_PATH"));
 
-    cy.findByTestId('test-link').scrollIntoView();
-
     cy.findByTestId('test-link').scrollIntoView().click();
 
     cy.contains('Basic').click();

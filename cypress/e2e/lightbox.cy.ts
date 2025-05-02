@@ -13,8 +13,8 @@ describe("Testing Lightbox PDF Rendering Configuration", () => {
 
     });
 
-    it("Should visit the deployed canary, then navigate via the header to the lightbox page route", () => {
-        cy.visit(Cypress.env("BASE_URL") + Cypress.env("DEFAULT_PATH"));
+    it("Should visit the deployed canary first at blank test page, then navigate via the header to the lightbox page route", () => {
+        cy.visit(Cypress.env("BASE_URL") +'#/test');
         cy.findByTestId('test-link').click();
         cy.contains('Lightbox').click();
         cy.addEventListenerAdobeReady().then((ready: any) => {
@@ -35,7 +35,7 @@ describe("Testing Lightbox PDF Rendering Configuration", () => {
         cy.go('back');
         cy.location(
             "pathname"
-        ).hash().should("eq", "#/test");
+        ).hash().should("eq", '#/test');
         cy.wait(1000); // adding wait only the lengthen the test duration 
         cy.go('forward');
         cy.location(
